@@ -8,7 +8,7 @@
 import UIKit
 
 
-class ViewController: UIViewController, UICollectionViewDataSource {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var SwipeView: UIView!
     @IBOutlet weak var Button1: UIButton!
@@ -23,19 +23,16 @@ class ViewController: UIViewController, UICollectionViewDataSource {
 // selection par défaut de Layout 2 : Button2 selected et Layout 2 dans la CollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
-        deselectAllButtons()
-        Button2.isSelected = true
-        selectedLayout2.alpha = 1
-        layoutSelected = .layout2
-//        layout.getCellNumber()
+        self.deselectAllButtons()
+        self.Button2.isSelected = true
+        self.selectedLayout2.alpha = 1
+        self.layoutSelected = .layout2
         
         // pour qu'il sache que les données du DATASOURCE se trouvent dans cette classe
         LayoutCollectionView.dataSource = self
-        
+        LayoutCollectionView.delegate = self
         
     }
-    
-    
     
 // ÉNUMÉRATION DES LAYOUTS
     enum Layouts {
@@ -63,6 +60,7 @@ class ViewController: UIViewController, UICollectionViewDataSource {
     var indexPath : IndexPath?
     
     
+    
 // SÉLECTION DU LAYOUT LORSQU'ON APPUIE SUR UN DES TROIS BOUTONS:
     @IBAction func Button1(_ sender: UIButton) {
         // Désélectionner tous les boutons
@@ -85,7 +83,7 @@ class ViewController: UIViewController, UICollectionViewDataSource {
         LayoutCollectionView.reloadData()
     }
     
-    @IBAction func Button3(_ sender: Any) {
+    @IBAction func Button3(_ sender: UIButton) {
         deselectAllButtons()
         Button3.isSelected = true
         selectedLayout3.alpha = 1
@@ -102,11 +100,10 @@ class ViewController: UIViewController, UICollectionViewDataSource {
         selectedLayout3.alpha = 0
     }
 
-// RÉCUPÉRER LE NOMBRE DE CELLULES DU LAYOUT POUR LA COLLECTIONVIEW
+// RÉCUPÉRER LE NOMBRE DE CELLULES DU LAYOUT POUR LA CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return layoutSelected.getCellNumber()
     }
-    
     
 //
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -115,120 +112,59 @@ class ViewController: UIViewController, UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
+
     
 // DIMENSIONNER LES CELLULES SELON LAYOUT CHOISI
-    func collectionView(_ collectionView: UICollectionView, layout LayoutCollectionView: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let demiWidth = collectionView.frame.size.width / 2
-        let fullWidth = collectionView.frame.size.width
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let fullSize = collectionView.frame.size.width
+        let halfSize = fullSize / 2
         
         switch layoutSelected {
         case .layout1  :
             if indexPath.item == 0 {
                 // Appliquer à la 1ère cellule la largeur complète de la CollectionView
-                return CGSize.init(width: fullWidth, height: demiWidth)
+                return CGSize.init(width: fullSize, height: halfSize)
             } else {
                 // Appliquer aux autres cellules une demie largeur de la CollectionView
-                return CGSize.init(width: demiWidth, height: demiWidth)
+                return CGSize.init(width: halfSize, height: halfSize)
             }
         case .layout2 :
             if indexPath.item == 2 {
                 // Appliquer à la 3ème cellule la largeur complète de la CollectionView
-                return CGSize.init(width: fullWidth, height: demiWidth)
+                return CGSize.init(width: fullSize, height: halfSize)
             } else {
                 // Appliquer aux autres cellules une demie largeur de la CollectionView
-                return CGSize.init(width: demiWidth, height: demiWidth)
+                return CGSize.init(width: halfSize, height: halfSize)
             }
         case .layout3 :
             // Appliquer à chaque cellule une demie largeur de la CollectionView
-            return CGSize.init(width: demiWidth, height: demiWidth)
+            return CGSize.init(width: halfSize, height: halfSize)
         }
     }
     
+    
+    
+    
+    
+
+// SWIPE TO SHARE
+    @IBAction func SwipeToShare(_ sender: UIPanGestureRecognizer) {
+            // si Portrait : swipe vers le haut
+            // si Paysage : swipe vers la gauche
+        
+        // image to share : je voudrais que mon image soit la CollectionView
+        let image = UIImage(named: "Icon")
+        
+        // set up activity view controller
+        let imageToShare = [ image! ]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
 
 
-    
-    
-    
-
-        
-        
-
-    // *** IF CLICK ON A LAYOUT BUTTON ***
-    // Action sur les Boutons
-    // 1. Mise en forme des boutons
-    // var oldLayoutImage = Button2.image ???
-    // Button2.image = ButtonActive.image
-    // ButtonActive.image = oldLayoutImage
-    // Button2.stateConfig = .selected (background color : Bleu dur avec opacité à 30% ?)
-    
-    // *** IF SWIPE ***
-    // Action sur 2 zones ?
-    // Envoyer vers
-        
-    // *** CHOISIR UNE PHOTO ***
-    // Action sur les cellules de la collectionView
-    // Accès à la bibliothèque du téléphone pour choisir image
-    // Attribution de l'image et disparition du "+"
-        
-    
-        
-        
-        
-        
     }
     
-    
-    
-//    
-//    
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Do any additional setup after loading the view.
-//    }
-//
-//    var layoutChoice = Layout
-//}
-//
-
-
-
-
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection Section: Int)  -> Int {
-//        let list : [UIImage] = [Image("Layout 1"), Image("Layout 2"), Image("Layout 3"), Image("Plus")]
-//
-
-
-
-// *** GENERER LA COLLECTION VIEW ***
-// récupérer le bouton sélectionné : nombre d'items, largeur des items, quel layout
-// créer les différentes mises en formes Layout 1, 2 et 3
-// appliquer le bon layout
-
-
-
-//    func collectionViewLayouts() {
-//
-//        let demiWidth = LayoutCollectionView.frame.size.width / 2
-//        let fullWidth = LayoutCollectionView.frame.size.width
-//
-//        switch self.layout {
-//        case .layout1  :
-//            // Items number = 3
-//            LayoutCollectionView.numberOfItems(inSection: 3)
-//            // First cell width = fullWidth and height = demiWidth
-//            // Other cells (2 and 3) width = height = demiWidth
-//           // (CGSize)indexPath[0]
-//           // CGSize.init(width: classicSize, height: classicSize)
-//
-//        case .layout2 :
-//            // Items number = 3
-//            // Third cell width = fullWidth and height = demiWidth
-//            // Other cells (1 and 2) width = height = demiWidth
-//
-//        case .layout3 :
-//            // Items number = 4
-//            // Each cell (1, 2 and 3) width = height = demiWidth
-//
-//    }
+}
