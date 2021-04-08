@@ -118,6 +118,9 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hV-m5-A0c">
+                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                        </button>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m2X-DJ-6N2">
                                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                         </imageView>
@@ -133,10 +136,14 @@
                                                         <constraint firstItem="70q-0W-Bkz" firstAttribute="centerX" secondItem="uV6-hb-QEw" secondAttribute="centerX" id="232-By-5Fv"/>
                                                         <constraint firstItem="70q-0W-Bkz" firstAttribute="centerX" secondItem="m2X-DJ-6N2" secondAttribute="centerX" id="Axd-LS-eMl"/>
                                                         <constraint firstItem="m2X-DJ-6N2" firstAttribute="top" secondItem="uV6-hb-QEw" secondAttribute="top" id="BZE-Ma-7pP"/>
+                                                        <constraint firstItem="9hV-m5-A0c" firstAttribute="leading" secondItem="uV6-hb-QEw" secondAttribute="leading" id="K5d-BL-iwq"/>
+                                                        <constraint firstItem="9hV-m5-A0c" firstAttribute="top" secondItem="uV6-hb-QEw" secondAttribute="top" id="MHS-AA-CcS"/>
                                                         <constraint firstAttribute="bottom" secondItem="m2X-DJ-6N2" secondAttribute="bottom" id="WTa-ly-SuT"/>
                                                         <constraint firstItem="m2X-DJ-6N2" firstAttribute="leading" secondItem="uV6-hb-QEw" secondAttribute="leading" id="c3P-fx-iE5"/>
+                                                        <constraint firstAttribute="bottom" secondItem="9hV-m5-A0c" secondAttribute="bottom" id="g24-R0-EVD"/>
                                                         <constraint firstItem="70q-0W-Bkz" firstAttribute="centerY" secondItem="m2X-DJ-6N2" secondAttribute="centerY" id="gJQ-d5-j0K"/>
                                                         <constraint firstAttribute="trailing" secondItem="m2X-DJ-6N2" secondAttribute="trailing" id="mFl-BT-HTp"/>
+                                                        <constraint firstAttribute="trailing" secondItem="9hV-m5-A0c" secondAttribute="trailing" id="qg6-3h-fej"/>
                                                     </constraints>
                                                 </collectionViewCellContentView>
                                                 <color key="backgroundColor" red="0.84705877299999999" green="0.84705877299999999" blue="0.84705877299999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -160,8 +167,7 @@
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="6"/>
                                                                 <state key="normal" backgroundImage="Layout 1"/>
                                                                 <connections>
-                                                                    <action selector="Button1:" destination="15V-bI-59e" eventType="touchUpInside" id="8Mb-FA-cQ0"/>
-                                                                    <action selector="shareImageButton:" destination="15V-bI-59e" eventType="touchUpInside" id="hhg-Ja-SXv"/>
+                                                                    <action selector="Button1:" destination="15V-bI-59e" eventType="touchUpInside" id="6Jm-is-sq2"/>
                                                                 </connections>
                                                             </button>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Selected" translatesAutoresizingMaskIntoConstraints="NO" id="e5q-gp-Vfv">
@@ -377,10 +383,11 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="Button1" destination="hdP-cL-wOV" id="8Fk-pz-ZNz"/>
+                        <outlet property="Button1" destination="hdP-cL-wOV" id="4IX-Vj-qTV"/>
                         <outlet property="Button2" destination="DRZ-j8-cBA" id="pMG-oe-1Kb"/>
                         <outlet property="Button3" destination="7Rn-GS-gFw" id="bds-D0-Axa"/>
                         <outlet property="LayoutCollectionView" destination="TRC-NO-D5d" id="YRG-ev-4P0"/>
+                        <outlet property="LayoutCollectionViewCenterConstraint" destination="jSD-pE-yZw" id="URS-gd-Jn7"/>
                         <outlet property="SwipeView" destination="9a7-Wu-t3l" id="HXm-aj-saR"/>
                         <outlet property="selectedLayout1" destination="e5q-gp-Vfv" id="aCM-of-A8h"/>
                         <outlet property="selectedLayout2" destination="RVH-TD-huS" id="O9n-mZ-fwl"/>

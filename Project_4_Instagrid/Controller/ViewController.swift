@@ -20,6 +20,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var selectedLayout2: UIImageView!
     @IBOutlet weak var selectedLayout3: UIImageView!
     
+    
+    @IBOutlet weak var LayoutCollectionViewCenterConstraint: NSLayoutConstraint!
+    
 // selection par défaut de Layout 2 : Button2 selected et Layout 2 dans la CollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +61,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var imagesSelected : [UIImage?] = [nil, nil, nil, nil]
     // Index de l'image
     var indexPath : IndexPath?
-    
+
     
     
 // SÉLECTION DU LAYOUT LORSQU'ON APPUIE SUR UN DES TROIS BOUTONS:
@@ -143,11 +146,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    
-    
-    
-    
-
 // SWIPE TO SHARE
     @IBAction func SwipeToShare(_ sender: UIPanGestureRecognizer) {
             // si Portrait : swipe vers le haut
@@ -156,6 +154,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // image to share : je voudrais que mon image soit la CollectionView
         let image = UIImage(named: "Icon")
         
+        // Animation : je veux déplacer vers le haut la collectionView mais n'y arrive pas car elle fait partie d'une stackview
+        
+        UIView.animate(withDuration: 1, animations: {
+
+//        LayoutCollectionViewCenterConstraint.constant = -100
+            self.LayoutCollectionView.layer.opacity = 0
+            // Je veux réduire par 3 la taille de la collectionView
+            self.LayoutCollectionView.layer.frame.size = CGSize(width: self.LayoutCollectionView.frame.width / 3, height: self.LayoutCollectionView.frame.height / 3)
+        })
+
         // set up activity view controller
         let imageToShare = [ image! ]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)

@@ -8,7 +8,14 @@
 import UIKit
 
 
-class LayoutCell: UICollectionViewCell{
+class LayoutCell: UICollectionViewCell, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    // Image de la cellule
+    @IBOutlet weak var imageView: UIImageView!
+
+    // Image picker
+    var imagePicker = UIImagePickerController()
+    
     
     // Ajout de bordures autour des cellules de la collectionView pour qu'elles soient visibles
     override func awakeFromNib() {
@@ -16,6 +23,29 @@ class LayoutCell: UICollectionViewCell{
     }
     
     
+    // PICK IMAGES FROM PHONE
     
+//    @IBAction func imageButton(_ sender: UIButton) {
+//
+//        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+//            imagePicker.delegate = self
+//            imagePicker.sourceType = .savedPhotosAlbum
+//            imagePicker.allowsEditing = false
+//
+//            present(imagePicker, animated: true, completion: nil)
+//               }
+//           }
+//
+//           func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+//               self.dismiss(animated: true, completion: { () -> Void in
+//
+//               })
+//
+//               imageView.image = image
+//
+//
+//
+//    }
+
     
 }
