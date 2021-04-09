@@ -7,6 +7,16 @@
 
 import UIKit
 
+// Extension d'UIVew qui permet de transformer la collectionView en UIImage
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
+}
+
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -20,10 +30,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var selectedLayout2: UIImageView!
     @IBOutlet weak var selectedLayout3: UIImageView!
     
+    @IBOutlet weak var CollectionViewLandscapeConstraint: NSLayoutConstraint!
+    @IBOutlet weak var CollectionViewPortraitConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var LayoutCollectionViewCenterConstraint: NSLayoutConstraint!
+    @IBOutlet var SwipeGesture: UISwipeGestureRecognizer!
     
-// selection par défaut de Layout 2 : Button2 selected et Layout 2 dans la CollectionView
+    
+    // selection par défaut de Layout 2 : Button2 selected et Layout 2 dans la CollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.deselectAllButtons()
@@ -35,7 +48,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         LayoutCollectionView.dataSource = self
         LayoutCollectionView.delegate = self
         
+        //Orientation pour le swipe : ne fonctionne pas
+        if UIDevice.current.orientation.isLandscape {
+            self.SwipeGesture.direction = .left
+        } else {
+            self.SwipeGesture.direction = .up
+        }
     }
+    
+    
+    
     
 // ÉNUMÉRATION DES LAYOUTS
     enum Layouts {
@@ -147,31 +169,51 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
 // SWIPE TO SHARE
-    @IBAction func SwipeToShare(_ sender: UIPanGestureRecognizer) {
-            // si Portrait : swipe vers le haut
-            // si Paysage : swipe vers la gauche
-        
-        // image to share : je voudrais que mon image soit la CollectionView
-        let image = UIImage(named: "Icon")
-        
-        // Animation : je veux déplacer vers le haut la collectionView mais n'y arrive pas car elle fait partie d'une stackview
-        
-        UIView.animate(withDuration: 1, animations: {
+    
+    
 
-            self.LayoutCollectionViewCenterConstraint.constant = -300
-//            self.LayoutCollectionView.layer.opacity = 0
-            // Je veux réduire par 3 la taille de la collectionView : essayer transform scale
-//            self.LayoutCollectionView.layer.frame.size = CGSize(width: self.LayoutCollectionView.frame.width / 1.2, height: self.LayoutCollectionView.frame.height / 1.2)
-        })
+    
+    
+    @IBAction func SwipeToShare(_ sender: UISwipeGestureRecognizer) {
+        // Tranforme la CollectionView en image
+        let layoutToShare = self.LayoutCollectionView.asImage()
 
-        // set up activity view controller
-        let imageToShare = [ image! ]
-        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        UIView.animate(withDuration: 0.75, animations: {
+            // si mode portrait : on envoie vers le haut
+            if UIDevice.current.orientation.isPortrait {
+                self.CollectionViewPortraitConstraint.constant = -300
+            }else{
+                // si mode paysage : on envoie vers le haut
+                self.CollectionViewLandscapeConstraint.constant = -300
+            }
             
-        // present the view controller
-        self.present(activityViewController, animated: true, completion: nil)
+            // faire disparaître
+            self.LayoutCollectionView.layer.opacity = 0
+            self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            // transform scale ne fonctionne pas
+//            self.LayoutCollectionView.transform.scaledBy(x: 2, y: 0)
+//            self.LayoutCollectionView.layer.frame.size = CGSize(width: self.LayoutCollectionView.frame.width / 1.2, height: self.LayoutCollectionView.frame.height / 1.2)
+            
+            // permet d'appliquer la durée de l'animation
+            self.view.layoutIfNeeded()
 
+        // Revenir à la position initiale
+        }, completion: { (finished) in
+            let activityController = UIActivityViewController(activityItems: [layoutToShare], applicationActivities: nil)
+            activityController.completionWithItemsHandler = { (type,completed,items,error) in
+                if UIDevice.current.orientation.isPortrait {
+                    self.CollectionViewPortraitConstraint.constant = 0
+                } else {
+                    self.CollectionViewLandscapeConstraint.constant = 0
+                }
+                UIView.animate(withDuration: 0.75) {
+                    self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.LayoutCollectionView.layer.opacity = 1
+                    self.view.layoutIfNeeded()
+                }
+            }
+            self.present(activityController, animated: true, completion: nil)
+        })
 
     }
     
