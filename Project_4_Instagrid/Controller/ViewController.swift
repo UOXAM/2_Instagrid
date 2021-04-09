@@ -120,7 +120,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 // DIMENSIONNER LES CELLULES SELON LAYOUT CHOISI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let fullSize = collectionView.frame.size.width
+        let fullSize = collectionView.frame.size.width * 0.9
         let halfSize = fullSize / 2
         
         switch layoutSelected {
@@ -158,10 +158,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         UIView.animate(withDuration: 1, animations: {
 
-//        LayoutCollectionViewCenterConstraint.constant = -100
-            self.LayoutCollectionView.layer.opacity = 0
-            // Je veux réduire par 3 la taille de la collectionView
-            self.LayoutCollectionView.layer.frame.size = CGSize(width: self.LayoutCollectionView.frame.width / 3, height: self.LayoutCollectionView.frame.height / 3)
+            self.LayoutCollectionViewCenterConstraint.constant = -300
+//            self.LayoutCollectionView.layer.opacity = 0
+            // Je veux réduire par 3 la taille de la collectionView : essayer transform scale
+//            self.LayoutCollectionView.layer.frame.size = CGSize(width: self.LayoutCollectionView.frame.width / 1.2, height: self.LayoutCollectionView.frame.height / 1.2)
         })
 
         // set up activity view controller
