@@ -12,40 +12,12 @@ class LayoutCell: UICollectionViewCell, UIImagePickerControllerDelegate, UINavig
     
     // Image de la cellule
     @IBOutlet weak var imageView: UIImageView!
-
-    // Image picker
-    var imagePicker = UIImagePickerController()
-    
+    @IBOutlet weak var addImageView: UIImageView!
     
     // Ajout de bordures autour des cellules de la collectionView pour qu'elles soient visibles
     override func awakeFromNib() {
         self.layer.borderWidth = 5
+        self.layer.borderColor = #colorLiteral(red: 0, green: 0.4076067805, blue: 0.6132292151, alpha: 1)
     }
-    
-    
-    // PICK IMAGES FROM PHONE
-    
-//    @IBAction func imageButton(_ sender: UIButton) {
-//
-//        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-//            imagePicker.delegate = self
-//            imagePicker.sourceType = .savedPhotosAlbum
-//            imagePicker.allowsEditing = false
-//
-//            present(imagePicker, animated: true, completion: nil)
-//               }
-//           }
-//
-//           func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
-//               self.dismiss(animated: true, completion: { () -> Void in
-//
-//               })
-//
-//               imageView.image = image
-//
-//
-//
-//    }
-
     
 }

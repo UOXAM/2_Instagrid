@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Extension d'UIVew qui permet de transformer la collectionView en UIImage
+// Extension de l'UIView qui permet de transformer la collectionView en UIImage
 extension UIView {
     func asImage() -> UIImage {
         let renderer = UIGraphicsImageRenderer(bounds: bounds)
@@ -18,12 +18,13 @@ extension UIView {
 }
 
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var SwipeView: UIView!
     @IBOutlet weak var Button1: UIButton!
     @IBOutlet weak var Button2: UIButton!
     @IBOutlet weak var Button3: UIButton!
+    @IBOutlet weak var swipeText: UILabel!
     
     @IBOutlet weak var LayoutCollectionView: UICollectionView!
     @IBOutlet weak var selectedLayout1: UIImageView!
@@ -34,9 +35,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var CollectionViewPortraitConstraint: NSLayoutConstraint!
     
     @IBOutlet var SwipeGesture: UISwipeGestureRecognizer!
-    
-    
-    // selection par défaut de Layout 2 : Button2 selected et Layout 2 dans la CollectionView
+
+    // Selection par défaut de Layout 2 : Button2 selected et Layout 2 dans la CollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.deselectAllButtons()
@@ -44,19 +44,48 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.selectedLayout2.alpha = 1
         self.layoutSelected = .layout2
         
-        // pour qu'il sache que les données du DATASOURCE se trouvent dans cette classe
+        // Pour qu'il sache que les données du DATASOURCE se trouvent dans cette classe
         LayoutCollectionView.dataSource = self
         LayoutCollectionView.delegate = self
         
-        //Orientation pour le swipe : ne fonctionne pas
-        if UIDevice.current.orientation.isLandscape {
-            self.SwipeGesture.direction = .left
+        orientation(isLandscape: landscapeOrientation())
+        
+        // Pourquoi UIDevice.current.orientation.isLandscape ne fonctionne pas dans le viewDidLoad ?
+        // Modifier le sens du swipe en fonction de l'orientation de départ
+//        if UIDevice.current.orientation.isLandscape {
+//            self.SwipeGesture.direction = .left
+//            self.swipeText.text = "Swipe left to share"
+//        } else {
+//            self.SwipeGesture.direction = .up
+//            self.swipeText.text = "Swipe up to share"
+//        }
+        
+        // Ajout de bordures à la CollectionView pour uniformiser avec les bordures des cellules
+        LayoutCollectionView.layer.borderWidth = 10
+        LayoutCollectionView.layer.borderColor = #colorLiteral(red: 0, green: 0.4076067805, blue: 0.6132292151, alpha: 1)
+    }
+    
+
+
+    // Définir l'orientation de l'écran en comparant la hauteur à la largeur
+    private func landscapeOrientation() -> Bool {
+        if UIScreen.main.bounds.width > UIScreen.main.bounds.height {
+            return true
         } else {
-            self.SwipeGesture.direction = .up
+            return false
         }
     }
     
-    
+    // Ajuster le sens du Swipe selon l'orientation de l'écran
+    private func orientation(isLandscape: Bool) {
+        if isLandscape {
+            self.swipeText.text = "Swipe left to share"
+            self.SwipeGesture.direction = .left
+        } else {
+            self.swipeText.text = "Swipe up to share"
+            self.SwipeGesture.direction = .up
+        }
+    }
     
     
 // ÉNUMÉRATION DES LAYOUTS
@@ -130,9 +159,41 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return layoutSelected.getCellNumber()
     }
     
-//
+
+// Permettre d'ouvrir la galerie d'image lors d'un clic sur une cellule de la CollectionView
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.indexPath = indexPath
+        let imgController = UIImagePickerController()
+        imgController.sourceType = .photoLibrary
+        imgController.delegate = self
+        imgController.allowsEditing = true
+        self.present(imgController, animated: true, completion: nil)
+    }
+    
+// Choisir une image dans la galerie et l'ajouter à la table
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var image: UIImage?
+        if let img = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            image = img
+        } else if let img = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            image = img
+        }
+        self.imagesSelected[indexPath?.item ?? 0] = image
+        picker.dismiss(animated: true) {
+            self.LayoutCollectionView.reloadData()
+        }
+    }
+    
+    
+// AFFICHER L'IMAGE SÉLECTIONNÉE ET ENLEVER LE "+"
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LayoutCell", for: indexPath) as? LayoutCell {
+            cell.imageView.image = self.imagesSelected[indexPath.item]
+            if cell.imageView.image != nil {
+                cell.addImageView.isHidden = true
+            } else {
+                cell.addImageView.isHidden = false
+            }
             return cell
         }
         return UICollectionViewCell()
@@ -142,7 +203,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 // DIMENSIONNER LES CELLULES SELON LAYOUT CHOISI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let fullSize = collectionView.frame.size.width * 0.9
+        let fullSize = collectionView.frame.size.width
         let halfSize = fullSize / 2
         
         switch layoutSelected {
@@ -177,10 +238,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func SwipeToShare(_ sender: UISwipeGestureRecognizer) {
         // Tranforme la CollectionView en image
         let layoutToShare = self.LayoutCollectionView.asImage()
-
+        
         UIView.animate(withDuration: 0.75, animations: {
             // si mode portrait : on envoie vers le haut
-            if UIDevice.current.orientation.isPortrait {
+            if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
                 self.CollectionViewPortraitConstraint.constant = -300
             }else{
                 // si mode paysage : on envoie vers le haut
@@ -190,9 +251,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             // faire disparaître
             self.LayoutCollectionView.layer.opacity = 0
             self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            // transform scale ne fonctionne pas
-//            self.LayoutCollectionView.transform.scaledBy(x: 2, y: 0)
-//            self.LayoutCollectionView.layer.frame.size = CGSize(width: self.LayoutCollectionView.frame.width / 1.2, height: self.LayoutCollectionView.frame.height / 1.2)
             
             // permet d'appliquer la durée de l'animation
             self.view.layoutIfNeeded()
@@ -203,8 +261,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             activityController.completionWithItemsHandler = { (type,completed,items,error) in
                 if UIDevice.current.orientation.isPortrait {
                     self.CollectionViewPortraitConstraint.constant = 0
-                } else {
                     self.CollectionViewLandscapeConstraint.constant = 0
+                    self.LayoutCollectionView.reloadData()
+
+                } else {
+                    self.CollectionViewPortraitConstraint.constant = 0
+                    self.CollectionViewLandscapeConstraint.constant = 0
+                    self.LayoutCollectionView.reloadData()
                 }
                 UIView.animate(withDuration: 0.75) {
                     self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -217,4 +280,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     }
     
+    
+    // Modifier le sens du swipe en lorsque l'orientation change
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.LayoutCollectionView.reloadData()
+        
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+            self.SwipeGesture.direction = .left
+            self.swipeText.text = "Swipe left to share"
+
+        } else {
+            print("Portrait")
+            self.SwipeGesture.direction = .up
+            self.swipeText.text = "Swipe up to share"
+        }
+        
+    }
+
 }

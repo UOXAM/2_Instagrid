@@ -100,7 +100,6 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ykZ-er-GGj">
                                         <rect key="frame" x="0.0" y="252.66666666666666" width="342.66666666666669" height="342.66666666666674"/>
-                                        <color key="backgroundColor" red="0.84705877299999999" green="0.84705877299999999" blue="0.84705877299999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ykZ-er-GGj" secondAttribute="height" multiplier="1:1" id="KLz-Ln-mTK"/>
                                         </constraints>
@@ -304,10 +303,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQA-mk-cnZ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                </button>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PLf-5h-hKA">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PLf-5h-hKA">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Plus" translatesAutoresizingMaskIntoConstraints="NO" id="fub-il-mVh">
@@ -319,13 +315,9 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="iQA-mk-cnZ" firstAttribute="top" secondItem="ffW-ft-pi4" secondAttribute="top" id="7dL-mt-WLQ"/>
                                                 <constraint firstItem="fub-il-mVh" firstAttribute="centerX" secondItem="PLf-5h-hKA" secondAttribute="centerX" id="9hu-gP-ghO"/>
                                                 <constraint firstAttribute="trailing" secondItem="PLf-5h-hKA" secondAttribute="trailing" id="EEE-no-DBg"/>
-                                                <constraint firstAttribute="bottom" secondItem="iQA-mk-cnZ" secondAttribute="bottom" id="H0K-y4-we1"/>
                                                 <constraint firstItem="PLf-5h-hKA" firstAttribute="leading" secondItem="ffW-ft-pi4" secondAttribute="leading" id="VBm-Qy-RDc"/>
-                                                <constraint firstItem="iQA-mk-cnZ" firstAttribute="leading" secondItem="ffW-ft-pi4" secondAttribute="leading" id="Vdu-Fb-kXz"/>
-                                                <constraint firstAttribute="trailing" secondItem="iQA-mk-cnZ" secondAttribute="trailing" id="WGB-KH-kx4"/>
                                                 <constraint firstItem="PLf-5h-hKA" firstAttribute="top" secondItem="ffW-ft-pi4" secondAttribute="top" id="YTN-Eo-OEE"/>
                                                 <constraint firstItem="fub-il-mVh" firstAttribute="centerX" secondItem="ffW-ft-pi4" secondAttribute="centerX" id="cdg-fd-eDj"/>
                                                 <constraint firstItem="fub-il-mVh" firstAttribute="centerY" secondItem="PLf-5h-hKA" secondAttribute="centerY" id="tkP-sP-P1b"/>
@@ -333,6 +325,10 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" red="0.84705877299999999" green="0.84705877299999999" blue="0.84705877299999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <outlet property="addImageView" destination="fub-il-mVh" id="PGS-Kp-57L"/>
+                                            <outlet property="imageView" destination="PLf-5h-hKA" id="yyT-Nu-JIR"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -410,6 +406,7 @@
                         <outlet property="selectedLayout1" destination="AAH-sI-Ykz" id="RZj-D8-oK6"/>
                         <outlet property="selectedLayout2" destination="qm1-Oy-BEk" id="l2h-Yq-Vho"/>
                         <outlet property="selectedLayout3" destination="e2a-oD-eFQ" id="he8-BT-Cho"/>
+                        <outlet property="swipeText" destination="0z1-gr-BFx" id="QIY-0V-FN4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7mq-kO-CcC" sceneMemberID="firstResponder"/>
@@ -422,6 +419,7 @@
             <point key="canvasLocation" x="3286" y="-1119"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.062745101750000004" green="0.40000003579999999" blue="0.59607845540000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
         <image name="Arrow Left" width="3.3333332538604736" height="4.6666665077209473"/>
         <image name="Arrow Up" width="4.6666665077209473" height="3.3333332538604736"/>
