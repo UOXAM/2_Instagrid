@@ -17,7 +17,6 @@ extension UIView {
     }
 }
 
-
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
    
     @IBOutlet weak var SwipeView: UIView!
@@ -59,22 +58,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 /// SWIPE ORIENTATION : determine the orientation
         orientation(isLandscape: landscapeOrientation())
         
-        // Pourquoi UIDevice.current.orientation.isLandscape ne fonctionne pas dans le viewDidLoad ?
-        // Modifier le sens du swipe en fonction de l'orientation de départ
-//        if UIDevice.current.orientation.isLandscape {
-//            self.SwipeGesture.direction = .left
-//            self.swipeText.text = "Swipe left to share"
-//        } else {
-//            self.SwipeGesture.direction = .up
-//            self.swipeText.text = "Swipe up to share"
-//        }
-        
         // Add borders to the CollectionView to uniform with borders cells
         LayoutCollectionView.layer.borderWidth = 8
         LayoutCollectionView.layer.borderColor = #colorLiteral(red: 0, green: 0.4076067805, blue: 0.6132292151, alpha: 1)
     }
-
-
 
 /// SWIPE ORIENTATION : determine if screen width is bigger than screen height --> landscape
     private func landscapeOrientation() -> Bool {
@@ -95,7 +82,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.SwipeGesture.direction = .up
         }
     }
-    
 
 /// LAYOUT : Enum of the 3  layouts
     enum Layouts {
@@ -183,7 +169,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         return UICollectionViewCell()
     }
-
     
 /// COLLECTIONVIEW : Apply the size to each cells according to the layout selecte
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -222,8 +207,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // Animation
         UIView.animate(withDuration: 0.75, animations: {
             // If orientation is Portrait : CollectionView sent up
-            if UIDevice.current.orientation.isPortrait {
-//          if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
+//            if UIDevice.current.orientation.isPortrait {
+          if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
 
                 self.CollectionViewPortraitConstraint.constant = -300
             // If orientation is Landscape : : CollectionView sent left
@@ -244,7 +229,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             activityController.completionWithItemsHandler = { (type,completed,items,error) in
                 
                 // If orientation is Portrait : CollectionView go back to initial position (even if the orientation change during the animation)
-                if UIDevice.current.orientation.isPortrait {
+                if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
                     self.CollectionViewPortraitConstraint.constant = 0
                     self.CollectionViewLandscapeConstraint.constant = 0
                     self.LayoutCollectionView.reloadData()
@@ -267,17 +252,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             // The activity controller appear (to send or save the image)
             self.present(activityController, animated: true, completion: nil)
         })
-
     }
-    
     
 /// SWIPE : Change the swipe direction if the orientation is modified
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         self.LayoutCollectionView.reloadData()
-        
-//        orientation(isLandscape: landscapeOrientation())
-
         
         // If orientation is Landscape : Swipe Gesture to left and text changed
         if UIDevice.current.orientation.isLandscape {
@@ -305,10 +285,4 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.LayoutCollectionView.reloadData()
         }
     }
-    
-// Optionnel : https://stackoverflow.com/questions/37834429/is-it-necessary-to-implement-imagepickercontrollerdidcancel
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        picker.dismiss(animated: true, completion: nil)
-//    }
-    
 }
