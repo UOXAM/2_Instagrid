@@ -274,8 +274,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewWillTransition(to: size, with: coordinator)
         self.LayoutCollectionView.reloadData()
         
+//        orientation(isLandscape: landscapeOrientation())
+
+        
         // If orientation is Landscape : Swipe Gesture to left and text changed
-        if UIDevice.current.orientation.isLandscape ||  self.landscapeOrientation() == true {
+        if UIDevice.current.orientation.isLandscape {
+//            if UIDevice.current.orientation.isLandscape ||  self.landscapeOrientation() == true {
             self.SwipeGesture.direction = .left
             self.swipeText.text = "Swipe left to share"
 
