@@ -58,9 +58,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 /// SWIPE ORIENTATION : determine the orientation
         orientation(isLandscape: landscapeOrientation())
         
-        // Add borders to the CollectionView to uniform with borders cells
-        LayoutCollectionView.layer.borderWidth = 8
-        LayoutCollectionView.layer.borderColor = #colorLiteral(red: 0, green: 0.4076067805, blue: 0.6132292151, alpha: 1)
+        // Solution 1 : Add borders to the CollectionView to uniform with borders cells
+//        LayoutCollectionView.layer.borderWidth = 8
+//        LayoutCollectionView.layer.borderColor = #colorLiteral(red: 0, green: 0.4076067805, blue: 0.6132292151, alpha: 1)
+        
+        // Solution 2 : Add space between CollectionView cells
+        let spacing: CGFloat = 15
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        self.LayoutCollectionView?.collectionViewLayout = layout
+        
     }
 
 /// SWIPE ORIENTATION : determine if screen width is bigger than screen height --> landscape
@@ -170,11 +179,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return UICollectionViewCell()
     }
     
-/// COLLECTIONVIEW : Apply the size to each cells according to the layout selecte
+/// COLLECTIONVIEW : Apply the size to each cells according to the layout selected
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let fullSize = collectionView.frame.size.width
-        let halfSize = fullSize / 2
+        // Solution 1 :
+//        let fullSize = collectionView.frame.size.width
+//        let halfSize = fullSize / 2
+        
+        // Solution 2 :
+        let spacingBetweenCells:CGFloat = 15
+        let fullSize = collectionView.frame.size.width - spacingBetweenCells * 2
+        let halfSize = collectionView.frame.size.width / 2 - spacingBetweenCells * 1.5
         
         switch layoutSelected {
         case .layout1  :
