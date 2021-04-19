@@ -225,14 +225,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //            if UIDevice.current.orientation.isPortrait {
           if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
 
-                self.CollectionViewPortraitConstraint.constant = -300
+            self.CollectionViewPortraitConstraint.constant = -550
             // If orientation is Landscape : : CollectionView sent left
             }else{
-                self.CollectionViewLandscapeConstraint.constant = -300
+                self.CollectionViewLandscapeConstraint.constant = -550
             }
             
             // CollectionView reduced and disappear
-            self.LayoutCollectionView.layer.opacity = 0
+            self.LayoutCollectionView.layer.opacity = 1
             self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
                 
             // Permit to apply the duration to the animation
