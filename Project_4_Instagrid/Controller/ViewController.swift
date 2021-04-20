@@ -26,9 +26,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var swipeText: UILabel!
     
     @IBOutlet weak var LayoutCollectionView: UICollectionView!
-    @IBOutlet weak var selectedLayout1: UIImageView!
-    @IBOutlet weak var selectedLayout2: UIImageView!
-    @IBOutlet weak var selectedLayout3: UIImageView!
     
     @IBOutlet weak var CollectionViewLandscapeConstraint: NSLayoutConstraint!
     @IBOutlet weak var CollectionViewPortraitConstraint: NSLayoutConstraint!
@@ -48,7 +45,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // Layout 2 by default : Button2 selected and Layout2 apply in the CollectionView
         self.deselectAllButtons()
         self.Button2.isSelected = true
-        self.selectedLayout2.alpha = 1
         self.layoutSelected = .layout2
         
         // dataSource and delegate refer to itself (ViewController class)
@@ -116,7 +112,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // Button1 state : selected
         Button1.isSelected = true
         // Image "selected" appears on the button (opacity = 1)
-        selectedLayout1.alpha = 1
+//        selectedLayout1.alpha = 1
         // Layout selected = layout1
         layoutSelected = .layout1
         // Actualise
@@ -126,7 +122,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func Button2(_ sender: UIButton) {
         deselectAllButtons()
         Button2.isSelected = true
-        selectedLayout2.alpha = 1
         layoutSelected = .layout2
         LayoutCollectionView.reloadData()
     }
@@ -134,7 +129,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func Button3(_ sender: UIButton) {
         deselectAllButtons()
         Button3.isSelected = true
-        selectedLayout3.alpha = 1
         layoutSelected = .layout3
         LayoutCollectionView.reloadData()
     }
@@ -144,10 +138,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         Button1.isSelected = false
         Button2.isSelected = false
         Button3.isSelected = false
-        // Image "selected" disappears on the button (opacity = 0)
-        selectedLayout1.alpha = 0
-        selectedLayout2.alpha = 0
-        selectedLayout3.alpha = 0
     }
 
 /// COLLECTIONVIEW  : found and apply the  number of cells (according to the layout selected) to the CollectionView
