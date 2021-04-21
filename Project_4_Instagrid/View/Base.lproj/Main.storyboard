@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,86 +110,47 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="ZU9-0g-V3A">
                                                 <rect key="frame" x="0.0" y="80.666666666666629" width="342.66666666666669" height="91.333333333333314"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvD-km-tp5" userLabel="Layout1">
+                                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nJ-RY-aB4" userLabel="Button1">
                                                         <rect key="frame" x="0.0" y="0.0" width="91.666666666666671" height="91.333333333333329"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nJ-RY-aB4" userLabel="Button1">
-                                                                <rect key="frame" x="0.0" y="0.0" width="91.666666666666671" height="91.333333333333329"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" secondItem="5nJ-RY-aB4" secondAttribute="height" multiplier="1:1" id="4tG-8p-OmG"/>
-                                                                </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                                <state key="normal" backgroundImage="Layout 1"/>
-                                                                <state key="selected" image="Selected" backgroundImage="Layout 1">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="Button1:" destination="lTj-ga-VW3" eventType="touchUpInside" id="aOx-C6-Yns"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="5nJ-RY-aB4" firstAttribute="top" secondItem="gvD-km-tp5" secondAttribute="top" id="6ah-Pf-WXy"/>
-                                                            <constraint firstItem="5nJ-RY-aB4" firstAttribute="leading" secondItem="gvD-km-tp5" secondAttribute="leading" id="N36-Qe-coA"/>
-                                                            <constraint firstAttribute="bottom" secondItem="5nJ-RY-aB4" secondAttribute="bottom" id="dVE-Ru-c7R"/>
-                                                            <constraint firstAttribute="trailing" secondItem="5nJ-RY-aB4" secondAttribute="trailing" id="dsJ-cR-PaJ"/>
-                                                            <constraint firstAttribute="width" secondItem="gvD-km-tp5" secondAttribute="height" multiplier="1:1" id="fb3-D4-dYk"/>
+                                                            <constraint firstAttribute="width" secondItem="5nJ-RY-aB4" secondAttribute="height" multiplier="1:1" id="4tG-8p-OmG"/>
                                                         </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akP-CC-g6C" userLabel="Layout2">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <state key="normal" backgroundImage="Layout 1"/>
+                                                        <state key="selected" image="Selected" backgroundImage="Layout 1">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="Button1:" destination="lTj-ga-VW3" eventType="touchUpInside" id="aOx-C6-Yns"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keQ-ci-omN" userLabel="Button2">
                                                         <rect key="frame" x="125.66666666666669" y="0.0" width="91.333333333333314" height="91.333333333333329"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keQ-ci-omN" userLabel="Button2">
-                                                                <rect key="frame" x="0.0" y="0.0" width="91.333333333333329" height="91.333333333333329"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" secondItem="keQ-ci-omN" secondAttribute="height" multiplier="1:1" id="0VP-9F-gcW"/>
-                                                                </constraints>
-                                                                <state key="normal" backgroundImage="Layout 2">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <state key="selected" image="Selected" backgroundImage="Layout 2"/>
-                                                                <connections>
-                                                                    <action selector="Button2:" destination="lTj-ga-VW3" eventType="touchUpInside" id="9ud-ex-Seo"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="keQ-ci-omN" firstAttribute="top" secondItem="akP-CC-g6C" secondAttribute="top" id="6fI-pV-mf1"/>
-                                                            <constraint firstAttribute="trailing" secondItem="keQ-ci-omN" secondAttribute="trailing" id="JpC-V4-y7o"/>
-                                                            <constraint firstAttribute="bottom" secondItem="keQ-ci-omN" secondAttribute="bottom" id="LBa-xg-aoS"/>
-                                                            <constraint firstAttribute="width" secondItem="akP-CC-g6C" secondAttribute="height" multiplier="1:1" id="TCP-zh-WVg"/>
-                                                            <constraint firstItem="keQ-ci-omN" firstAttribute="leading" secondItem="akP-CC-g6C" secondAttribute="leading" id="fHM-Ca-eK9"/>
+                                                            <constraint firstAttribute="width" secondItem="keQ-ci-omN" secondAttribute="height" multiplier="1:1" id="0VP-9F-gcW"/>
                                                         </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aBG-RJ-KMh" userLabel="Layout3">
+                                                        <state key="normal" backgroundImage="Layout 2">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <state key="selected" image="Selected" backgroundImage="Layout 2"/>
+                                                        <connections>
+                                                            <action selector="Button2:" destination="lTj-ga-VW3" eventType="touchUpInside" id="9ud-ex-Seo"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mWr-fT-B9R" userLabel="Button3">
                                                         <rect key="frame" x="251.00000000000003" y="0.0" width="91.666666666666657" height="91.333333333333329"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mWr-fT-B9R" userLabel="Button3">
-                                                                <rect key="frame" x="0.0" y="0.0" width="91.666666666666671" height="91.333333333333329"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" secondItem="mWr-fT-B9R" secondAttribute="height" multiplier="1:1" id="WX0-5n-OhC"/>
-                                                                </constraints>
-                                                                <state key="normal" backgroundImage="Layout 3">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <state key="selected" image="Selected" backgroundImage="Layout 3"/>
-                                                                <connections>
-                                                                    <action selector="Button3:" destination="lTj-ga-VW3" eventType="touchUpInside" id="HDU-HB-Sc0"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="mWr-fT-B9R" firstAttribute="top" secondItem="aBG-RJ-KMh" secondAttribute="top" id="1uk-9T-SSZ"/>
-                                                            <constraint firstItem="mWr-fT-B9R" firstAttribute="leading" secondItem="aBG-RJ-KMh" secondAttribute="leading" id="OC5-iv-uj5"/>
-                                                            <constraint firstAttribute="trailing" secondItem="mWr-fT-B9R" secondAttribute="trailing" id="Pab-Gn-pKe"/>
-                                                            <constraint firstAttribute="bottom" secondItem="mWr-fT-B9R" secondAttribute="bottom" id="RA7-jV-8he"/>
-                                                            <constraint firstAttribute="width" secondItem="aBG-RJ-KMh" secondAttribute="height" multiplier="1:1" id="sxP-Ln-O5T"/>
+                                                            <constraint firstAttribute="width" secondItem="mWr-fT-B9R" secondAttribute="height" multiplier="1:1" id="WX0-5n-OhC"/>
                                                         </constraints>
-                                                    </view>
+                                                        <state key="normal" backgroundImage="Layout 3">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <state key="selected" image="Selected" backgroundImage="Layout 3"/>
+                                                        <connections>
+                                                            <action selector="Button3:" destination="lTj-ga-VW3" eventType="touchUpInside" id="HDU-HB-Sc0"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <variation key="widthClass=regular" axis="vertical"/>
                                                 <variation key="heightClass=compact-widthClass=compact" axis="vertical"/>
@@ -403,7 +363,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3286" y="-1119"/>
+            <point key="canvasLocation" x="3060" y="-1464"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.062745101750000004" green="0.40000003579999999" blue="0.59607845540000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -416,8 +376,5 @@
         <image name="Layout 3" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Plus" width="13.333333015441895" height="13.333333015441895"/>
         <image name="Selected" width="26.666666030883789" height="26.666666030883789"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

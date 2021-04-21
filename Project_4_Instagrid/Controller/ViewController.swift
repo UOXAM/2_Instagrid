@@ -233,18 +233,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let activityController = UIActivityViewController(activityItems: [layoutToShare], applicationActivities: nil)
             activityController.completionWithItemsHandler = { (type,completed,items,error) in
                 
-                // If orientation is Portrait : CollectionView go back to initial position (even if the orientation change during the animation)
-                if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
-                    self.CollectionViewPortraitConstraint.constant = 0
-                    self.CollectionViewLandscapeConstraint.constant = 0
-                    self.LayoutCollectionView.reloadData()
-                    
-                    // If orientation is Landscape : CollectionView go back to initial position (even if the orientation change during the animation)
-                } else {
-                    self.CollectionViewPortraitConstraint.constant = 0
-                    self.CollectionViewLandscapeConstraint.constant = 0
-                    self.LayoutCollectionView.reloadData()
-                }
+                // CollectionView go back to initial position (even if the orientation change during the animation)
+                self.CollectionViewPortraitConstraint.constant = 0
+                self.CollectionViewLandscapeConstraint.constant = 0
+                self.LayoutCollectionView.reloadData()
                 
                 // CollectionView reappear and recover initial size (same duration)
                 UIView.animate(withDuration: 0.75) {
