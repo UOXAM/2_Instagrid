@@ -64,7 +64,6 @@
 				C305AEEE25FA178C003CA366 /* Controller */,
 				C305AEE025F7B50F003CA366 /* View */,
 				C305AEE725FA1692003CA366 /* Supporting Files */,
-				C305AEE625FA1681003CA366 /* Model */,
 			);
 			path = Project_4_Instagrid;
 			sourceTree = "<group>";
@@ -75,13 +74,6 @@
 				C305AECA25F27D35003CA366 /* Main.storyboard */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		C305AEE625FA1681003CA366 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		C305AEE725FA1692003CA366 /* Supporting Files */ = {
