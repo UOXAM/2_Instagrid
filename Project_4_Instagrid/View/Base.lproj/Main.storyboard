@@ -352,7 +352,6 @@
                         <outlet property="CollectionViewPortraitConstraint" destination="KvQ-5d-skO" id="pZ9-ae-9V6"/>
                         <outlet property="LayoutCollectionView" destination="qMQ-av-K4e" id="wiW-YQ-v95"/>
                         <outlet property="SwipeGesture" destination="ZNk-k6-Upb" id="IF4-bf-jE7"/>
-                        <outlet property="SwipeView" destination="rUe-Qn-pMC" id="ZIj-6U-wfB"/>
                         <outlet property="swipeText" destination="0z1-gr-BFx" id="QIY-0V-FN4"/>
                     </connections>
                 </viewController>
