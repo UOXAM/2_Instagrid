@@ -14,7 +14,6 @@
 		C305AECE25F27D35003CA366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C305AECD25F27D35003CA366 /* Assets.xcassets */; };
 		C305AED125F27D35003CA366 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C305AECF25F27D35003CA366 /* LaunchScreen.storyboard */; };
 		C3476DFB2615D1A0007BDBD8 /* LayoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3476DFA2615D1A0007BDBD8 /* LayoutCell.swift */; };
-		C3476E0026175180007BDBD8 /* Delm-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C3476DFF26175180007BDBD8 /* Delm-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +27,7 @@
 		C305AED225F27D35003CA366 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C305AEE925FA16AF003CA366 /* ThirstySoftRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThirstySoftRegular.otf; sourceTree = "<group>"; };
 		C3476DFA2615D1A0007BDBD8 /* LayoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCell.swift; sourceTree = "<group>"; };
-		C3476DFF26175180007BDBD8 /* Delm-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Delm-Medium.otf"; path = "../../../../Downloads/Delm-Medium.otf"; sourceTree = "<group>"; };
+		C3476E0B2631843C007BDBD8 /* Delm-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Delm-Medium.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +78,7 @@
 		C305AEE725FA1692003CA366 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C3476DFF26175180007BDBD8 /* Delm-Medium.otf */,
+				C3476E0B2631843C007BDBD8 /* Delm-Medium.otf */,
 				C305AEC425F27D35003CA366 /* AppDelegate.swift */,
 				C305AEC625F27D35003CA366 /* SceneDelegate.swift */,
 				C305AEE925FA16AF003CA366 /* ThirstySoftRegular.otf */,
@@ -158,7 +157,6 @@
 			files = (
 				C305AED125F27D35003CA366 /* LaunchScreen.storyboard in Resources */,
 				C305AECE25F27D35003CA366 /* Assets.xcassets in Resources */,
-				C3476E0026175180007BDBD8 /* Delm-Medium.otf in Resources */,
 				C305AECC25F27D35003CA366 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
