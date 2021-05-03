@@ -16,10 +16,4 @@ class LayoutCell: UICollectionViewCell, UIImagePickerControllerDelegate, UINavig
     // Image "+" of the cell
     @IBOutlet weak var addImageView: UIImageView!
     
-    // Solution 1 : Add border the each cells
-    //    override func awakeFromNib() {
-    //        self.layer.borderWidth = 4
-    //        self.layer.borderColor = #colorLiteral(red: 0, green: 0.4076067805, blue: 0.6132292151, alpha: 1)
-    //    }
-    
 }
