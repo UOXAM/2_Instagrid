@@ -13,6 +13,7 @@
 		C305AECC25F27D35003CA366 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C305AECA25F27D35003CA366 /* Main.storyboard */; };
 		C305AECE25F27D35003CA366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C305AECD25F27D35003CA366 /* Assets.xcassets */; };
 		C305AED125F27D35003CA366 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C305AECF25F27D35003CA366 /* LaunchScreen.storyboard */; };
+		C33B12962643F0C5001BCF16 /* ExtensionUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33B12952643F0C5001BCF16 /* ExtensionUIView.swift */; };
 		C3476DFB2615D1A0007BDBD8 /* LayoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3476DFA2615D1A0007BDBD8 /* LayoutCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		C305AED025F27D35003CA366 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C305AED225F27D35003CA366 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C305AEE925FA16AF003CA366 /* ThirstySoftRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThirstySoftRegular.otf; sourceTree = "<group>"; };
+		C33B12952643F0C5001BCF16 /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
 		C3476DFA2615D1A0007BDBD8 /* LayoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCell.swift; sourceTree = "<group>"; };
 		C3476E0B2631843C007BDBD8 /* Delm-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Delm-Medium.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				C305AEC825F27D35003CA366 /* ViewController.swift */,
+				C33B12952643F0C5001BCF16 /* ExtensionUIView.swift */,
 				C3476DFA2615D1A0007BDBD8 /* LayoutCell.swift */,
 			);
 			path = Controller;
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C33B12962643F0C5001BCF16 /* ExtensionUIView.swift in Sources */,
 				C3476DFB2615D1A0007BDBD8 /* LayoutCell.swift in Sources */,
 				C305AEC925F27D35003CA366 /* ViewController.swift in Sources */,
 				C305AEC525F27D35003CA366 /* AppDelegate.swift in Sources */,

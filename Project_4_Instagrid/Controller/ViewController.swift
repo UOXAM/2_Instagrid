@@ -7,48 +7,41 @@
 
 import UIKit
 
-/// EXTENSION UIView : Allow to transform CollectionView to UIImage
-extension UIView {
-    func asImage() -> UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { rendererContext in
-            layer.render(in: rendererContext.cgContext)
-        }
-    }
-}
+class ViewController: UIViewController, UINavigationControllerDelegate {
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    @IBOutlet weak var Button1: UIButton!
-    @IBOutlet weak var Button2: UIButton!
-    @IBOutlet weak var Button3: UIButton!
-    @IBOutlet weak var swipeText: UILabel!
-
-    @IBOutlet weak var LayoutCollectionView: UICollectionView!
-
-    @IBOutlet weak var CollectionViewLandscapeConstraint: NSLayoutConstraint!
-    @IBOutlet weak var CollectionViewPortraitConstraint: NSLayoutConstraint!
-
-    @IBOutlet var SwipeGesture: UISwipeGestureRecognizer!
-
+// MARK: Variables
+    @IBOutlet weak private var button1: UIButton!
+    @IBOutlet weak private var button2: UIButton!
+    @IBOutlet weak private var button3: UIButton!
+    @IBOutlet weak private var swipeText: UILabel!
+    @IBOutlet weak private var layoutCollectionView: UICollectionView!
+    @IBOutlet weak private var collectionViewLandscapeConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var collectionViewPortraitConstraint: NSLayoutConstraint!
+    @IBOutlet private var swipeGesture: UISwipeGestureRecognizer!
     // Layout by default
-    var layoutSelected : Layouts = .layout2
+    private var layoutSelected : Layouts = .layout2
     // Table of images (empty)
-    var imagesSelected : [UIImage?] = [nil, nil, nil, nil]
+    private var imagesSelected : [UIImage?] = [nil, nil, nil, nil]
     // Image index
-    var indexPath : IndexPath?
+    private var indexPath : IndexPath?
 
+// MARK: viewDidLoad
     // viewDidLoad : Called after the view has been loaded
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpViewDidLoad()
+    }
+
+    // set up the method viewDidLoad
+    private func setUpViewDidLoad() {
         // Layout 2 by default : Button2 selected and Layout2 apply in the CollectionView
         self.deselectAllButtons()
-        self.Button2.isSelected = true
+        self.button2.isSelected = true
         self.layoutSelected = .layout2
 
         // dataSource and delegate refer to itself (ViewController class)
-        LayoutCollectionView.dataSource = self
-        LayoutCollectionView.delegate = self
+        layoutCollectionView.dataSource = self
+        layoutCollectionView.delegate = self
 
         /// SWIPE ORIENTATION : determine the orientation
         orientation(isLandscape: landscapeOrientation())
@@ -59,7 +52,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        self.LayoutCollectionView?.collectionViewLayout = layout
+        self.layoutCollectionView?.collectionViewLayout = layout
     }
 
     /// SWIPE ORIENTATION : determine if screen width is bigger than screen height --> landscape
@@ -75,13 +68,119 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     private func orientation(isLandscape: Bool) {
         if isLandscape {
             self.swipeText.text = "Swipe left to share"
-            self.SwipeGesture.direction = .left
+            self.swipeGesture.direction = .left
         } else {
             self.swipeText.text = "Swipe up to share"
-            self.SwipeGesture.direction = .up
+            self.swipeGesture.direction = .up
         }
     }
 
+// MARK: Buttons IBAction to choose the layout
+    /// LAYOUT : Selection of the layout after press button
+    @IBAction func Button1(_ sender: UIButton) {
+        // All buttons state : deselected
+        deselectAllButtons()
+        // Button1 state : selected
+        button1.isSelected = true
+        // Layout selected = layout1
+        layoutSelected = .layout1
+        // Actualise
+        layoutCollectionView.reloadData()
+    }
+
+    @IBAction func Button2(_ sender: UIButton) {
+        deselectAllButtons()
+        button2.isSelected = true
+        layoutSelected = .layout2
+        layoutCollectionView.reloadData()
+    }
+
+    @IBAction func Button3(_ sender: UIButton) {
+        deselectAllButtons()
+        button3.isSelected = true
+        layoutSelected = .layout3
+        layoutCollectionView.reloadData()
+    }
+
+    private func deselectAllButtons() {
+        // All buttons state : deselected
+        button1.isSelected = false
+        button2.isSelected = false
+        button3.isSelected = false
+    }
+
+// MARK: Swipe IBAction to share
+    /// SWIPE : Share the image
+    @IBAction func SwipeToShare(_ sender: UISwipeGestureRecognizer) {
+        // Tranform the CollectionView to an image
+        let layoutToShare = self.layoutCollectionView.asImage()
+
+        // Animation
+        UIView.animate(withDuration: 0.75, animations: {
+            // If orientation is Portrait : CollectionView sent up
+            if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
+                self.collectionViewPortraitConstraint.constant = -700
+            // If orientation is Landscape : : CollectionView sent left
+            }else{
+                self.collectionViewLandscapeConstraint.constant = -700
+            }
+
+            // CollectionView reduced and disappear
+            self.layoutCollectionView.layer.opacity = 0
+//            self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+
+            // Permit to apply the duration to the animation
+            self.view.layoutIfNeeded()
+
+            // Go back to the view before the Animation
+        }, completion: { (finished) in
+            let activityController = UIActivityViewController(activityItems: [layoutToShare], applicationActivities: nil)
+            activityController.completionWithItemsHandler = { (type,completed,items,error) in
+
+                // CollectionView go back to initial position (even if the orientation change during the animation)
+                self.collectionViewPortraitConstraint.constant = 0
+                self.collectionViewLandscapeConstraint.constant = 0
+                self.layoutCollectionView.reloadData()
+
+                // CollectionView reappear and recover initial size (same duration)
+                UIView.animate(withDuration: 0.75) {
+                    self.layoutCollectionView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.layoutCollectionView.layer.opacity = 1
+                    self.view.layoutIfNeeded()
+                }
+            }
+
+            // The activity controller appear (to send or save the image)
+            self.present(activityController, animated: true, completion: nil)
+        })
+    }
+    
+// MARK: viewWillTransition
+    /// SWIPE : Change the swipe direction if the orientation is modified
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        setUpViewWillTransition()
+    }
+
+    // set up the method viewWillTransition
+    private func setUpViewWillTransition(){
+        self.layoutCollectionView.reloadData()
+
+        // If orientation is Landscape : Swipe Gesture to left and text changed
+        if UIDevice.current.orientation.isLandscape {
+            self.swipeGesture.direction = .left
+            self.swipeText.text = "Swipe left to share"
+
+            // If orientation is Portrait : Swipe Gesture to up and text changed
+        } else {
+            self.swipeGesture.direction = .up
+            self.swipeText.text = "Swipe up to share"
+        }
+    }
+}
+
+// MARK: UICollectionViewDataSource
+extension ViewController: UICollectionViewDataSource {
     /// LAYOUT : Enum of the 3  layouts
     enum Layouts {
         case layout1
@@ -99,52 +198,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
 
-    /// LAYOUT : Selection of the layout after press button
-    @IBAction func Button1(_ sender: UIButton) {
-        // All buttons state : deselected
-        deselectAllButtons()
-        // Button1 state : selected
-        Button1.isSelected = true
-        // Layout selected = layout1
-        layoutSelected = .layout1
-        // Actualise
-        LayoutCollectionView.reloadData()
-    }
-
-    @IBAction func Button2(_ sender: UIButton) {
-        deselectAllButtons()
-        Button2.isSelected = true
-        layoutSelected = .layout2
-        LayoutCollectionView.reloadData()
-    }
-
-    @IBAction func Button3(_ sender: UIButton) {
-        deselectAllButtons()
-        Button3.isSelected = true
-        layoutSelected = .layout3
-        LayoutCollectionView.reloadData()
-    }
-
-    private func deselectAllButtons() {
-        // All buttons state : deselected
-        Button1.isSelected = false
-        Button2.isSelected = false
-        Button3.isSelected = false
-    }
-
     /// COLLECTIONVIEW  : found and apply the  number of cells (according to the layout selected) to the CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return layoutSelected.getCellNumber()
-    }
-
-    /// COLLECTIONVIEW : Open image gallery when clic on a cell of the CollectionView
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.indexPath = indexPath
-        let imgController = UIImagePickerController()
-        imgController.sourceType = .photoLibrary
-        imgController.delegate = self
-        imgController.allowsEditing = true
-        self.present(imgController, animated: true, completion: nil)
     }
 
     /// COLLECTIONVIEW  :  Show the image saved in the table and hide the "+"
@@ -159,6 +215,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             return cell
         }
         return UICollectionViewCell()
+    }
+
+
+}
+
+// MARK: UICollectionViewDelegate
+extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    /// COLLECTIONVIEW : Open image gallery when clic on a cell of the CollectionView
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.indexPath = indexPath
+        let imgController = UIImagePickerController()
+        imgController.sourceType = .photoLibrary
+        imgController.delegate = self
+        imgController.allowsEditing = true
+        self.present(imgController, animated: true, completion: nil)
     }
 
     /// COLLECTIONVIEW : Apply the size to each cells according to the layout selected
@@ -191,69 +262,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             return CGSize.init(width: halfSize, height: halfSize)
         }
     }
+}
 
-    /// SWIPE : Share the image
-    @IBAction func SwipeToShare(_ sender: UISwipeGestureRecognizer) {
-        // Tranform the CollectionView to an image
-        let layoutToShare = self.LayoutCollectionView.asImage()
-
-        // Animation
-        UIView.animate(withDuration: 0.75, animations: {
-            // If orientation is Portrait : CollectionView sent up
-            if UIDevice.current.orientation.isPortrait ||  self.landscapeOrientation() == false {
-                self.CollectionViewPortraitConstraint.constant = -700
-            // If orientation is Landscape : : CollectionView sent left
-            }else{
-                self.CollectionViewLandscapeConstraint.constant = -700
-            }
-
-            // CollectionView reduced and disappear
-            self.LayoutCollectionView.layer.opacity = 0
-//            self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-
-            // Permit to apply the duration to the animation
-            self.view.layoutIfNeeded()
-
-            // Go back to the view before the Animation
-        }, completion: { (finished) in
-            let activityController = UIActivityViewController(activityItems: [layoutToShare], applicationActivities: nil)
-            activityController.completionWithItemsHandler = { (type,completed,items,error) in
-
-                // CollectionView go back to initial position (even if the orientation change during the animation)
-                self.CollectionViewPortraitConstraint.constant = 0
-                self.CollectionViewLandscapeConstraint.constant = 0
-                self.LayoutCollectionView.reloadData()
-
-                // CollectionView reappear and recover initial size (same duration)
-                UIView.animate(withDuration: 0.75) {
-                    self.LayoutCollectionView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    self.LayoutCollectionView.layer.opacity = 1
-                    self.view.layoutIfNeeded()
-                }
-            }
-
-            // The activity controller appear (to send or save the image)
-            self.present(activityController, animated: true, completion: nil)
-        })
-    }
-
-    /// SWIPE : Change the swipe direction if the orientation is modified
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        self.LayoutCollectionView.reloadData()
-
-        // If orientation is Landscape : Swipe Gesture to left and text changed
-        if UIDevice.current.orientation.isLandscape {
-            self.SwipeGesture.direction = .left
-            self.swipeText.text = "Swipe left to share"
-
-            // If orientation is Portrait : Swipe Gesture to up and text changed
-        } else {
-            self.SwipeGesture.direction = .up
-            self.swipeText.text = "Swipe up to share"
-        }
-    }
-
+// MARK: imagePickerController
+extension ViewController: UIImagePickerControllerDelegate  {
     /// IMAGE PICKER : Choose image from gallery and add to the table
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info:[UIImagePickerController.InfoKey : Any]) {
         var image: UIImage?
@@ -264,7 +276,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         self.imagesSelected[indexPath?.item ?? 0] = image
         picker.dismiss(animated: true) {
-            self.LayoutCollectionView.reloadData()
+            self.layoutCollectionView.reloadData()
         }
     }
 }
